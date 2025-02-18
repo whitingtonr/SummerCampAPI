@@ -1,0 +1,6 @@
+@SummerCampAPI_HostAddress = http://localhost:5252
+
+GET {{SummerCampAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,89 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace SummerCampAPI.Migrations
+{
+    /// <inheritdoc />
+    public partial class SummerCampAPIModelsRegistrationsContext : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "SC_Payments",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FK_SC_Registration = table.Column<int>(type: "int", nullable: false),
+                    Event_Type = table.Column<string>(type: "VARCHAR(255)", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(9,2)", precision: 9, scale: 2, nullable: false),
+                    Message = table.Column<string>(type: "VARCHAR(255)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SC_Payments", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SC_Registration",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FK_Student_Registration__Student_ID = table.Column<int>(type: "int", nullable: false),
+                    FK_Summer_Camps = table.Column<int>(type: "int", nullable: false),
+                    FK_Summer_Camp_Choice = table.Column<int>(type: "int", nullable: false),
+                    FK_Status = table.Column<int>(type: "int", nullable: false),
+                    CalendarYR = table.Column<string>(type: "VARCHAR(255)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SC_Registration", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SC_Status_History",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FK_SC_Registration = table.Column<int>(type: "int", nullable: false),
+                    Action = table.Column<string>(type: "VARCHAR(255)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SC_Status_History", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SC_Status_Lookup",
+                columns: table => new
+                {
+                    ID_Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Desc = table.Column<string>(type: "VARCHAR(255)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SC_Status_Lookup", x => x.ID_Code);
+                });
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "SC_Payments");
+
+            migrationBuilder.DropTable(
+                name: "SC_Registration");
+
+            migrationBuilder.DropTable(
+                name: "SC_Status_History");
+
+            migrationBuilder.DropTable(
+                name: "SC_Status_Lookup");
+        }
+    }
+}
