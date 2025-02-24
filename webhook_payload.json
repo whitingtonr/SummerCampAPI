@@ -1,0 +1,42 @@
+{
+	"event_meta_data": {
+		"event_type": "card_sale",
+		"version": "1.0"
+	},
+	"event_data": {
+		"request": {
+			"gateway_mid": 301,
+			"payment_channel": "IVR",
+			"amount": 100.00,
+			"amount_cents": 10000,
+			"card_brand": "VISA",
+			"card_type": "DEBIT",
+			"card_expiration": "0919",
+			"card_last_four": "1003",
+			"card_name": "John Smith",
+			"address": "1313 Mockingbird Lane",
+			"invoice_number": "100002",
+			"customer_id": "C123123",
+			"custom_fields": {}
+		},
+		"timestamp": "2017-02-01T19:55:19.495166",
+		"result": {
+			"result_code": "0",
+			"pn_ref": "213321",
+			"auth_code": "APP1212",
+			"host_code": "73312111",
+			"host_url": "",
+			"message": "APPROVED",
+			"message1": "",
+			"message2": "",
+			"resp_msg": "Approved",
+			"avs_result": {
+				"AVSResponse": "0",
+				"ZipMatch": "0",
+				"StreetMatch": "0"
+			},
+			"commercial_card": false,
+			"cv_result": {}
+		}
+	}
+}

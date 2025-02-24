@@ -46,28 +46,3 @@ namespace SummerCampAPI.Models
 		public string Message { get; set; }
 	}
 }
-
-//SC_Registration
-//  ID int primary key
-//		FK_Student_Registration__Student_ID
-//		FK_Summer_Camps
-//		FK_Summer_Camp_Choice
-//		Status
-//		CalendarYR
-		
-//	SC_Status_Tracking
-//		ID int primary key
-//		FK_SC_Registration int
-//		Action varchar(255)
-		
-//	SC_Status_Lookup
-//		ID int primary key
-//		Code varchar(1)
-//		Desc varchar(255)
-		
-//	SC_Payments
-//		ID int primary key
-//		FK_SC_Registration int
-//		Event_Type varchar(255)
-//		Amount decimal(9, 2)
-//Message varchar(255)
