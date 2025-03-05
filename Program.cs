@@ -20,7 +20,7 @@ var conString = builder.Configuration.GetConnectionString("DevDb") ??
     " not found.");
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<RegistrationsContext>(options => options.UseSqlServer(conString));
+builder.Services.AddDbContext<RegistrationsContext>(options => options.UseSqlServer(conString, o => o.UseCompatibilityLevel(100)));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

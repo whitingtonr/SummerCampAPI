@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SummerCampAPI.Models;
 
@@ -11,9 +12,11 @@ using SummerCampAPI.Models;
 namespace SummerCampAPI.Migrations
 {
     [DbContext(typeof(RegistrationsContext))]
-    partial class RegistrationsContextModelSnapshot : ModelSnapshot
+    [Migration("20250303191019_ChangeActionFromDescToFK_Status")]
+    partial class ChangeActionFromDescToFK_Status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,41 +63,21 @@ namespace SummerCampAPI.Migrations
 
                     b.Property<string>("CalendarYR")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FK_PCS_StudentLookup__Student_ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("VARCHAR(255)");
 
                     b.Property<string>("FK_Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("VARCHAR(255)");
+
+                    b.Property<string>("FK_Student_Registration__Student_ID")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(255)");
 
                     b.Property<int>("FK_Summer_Camp_Choice")
                         .HasColumnType("int");
 
-                    b.Property<string>("SchoolName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("School_ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Summer_Camp_Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdateUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WeekNbr")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("FK_Summer_Camps")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SummerCampAPI.Models;
 
@@ -11,9 +12,11 @@ using SummerCampAPI.Models;
 namespace SummerCampAPI.Migrations
 {
     [DbContext(typeof(RegistrationsContext))]
-    partial class RegistrationsContextModelSnapshot : ModelSnapshot
+    [Migration("20250305211850_ChangedNameOfFK_Student_lookup2")]
+    partial class ChangedNameOfFK_Student_lookup2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,26 +76,18 @@ namespace SummerCampAPI.Migrations
                     b.Property<int>("FK_Summer_Camp_Choice")
                         .HasColumnType("int");
 
-                    b.Property<string>("SchoolName")
+                    b.Property<int?>("FK_Summer_Camps")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TMP_SchoolName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("School_ID")
+                    b.Property<string>("TMP_School_ID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Summer_Camp_Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdateUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WeekNbr")
+                    b.Property<string>("TMP_Summer_Camp_Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

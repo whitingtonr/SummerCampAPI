@@ -11,8 +11,8 @@ using SummerCampAPI.Models;
 namespace SummerCampAPI.Migrations
 {
     [DbContext(typeof(RegistrationsContext))]
-    [Migration("20250217204201_SummerCampAPI.Models.RegistrationsContext")]
-    partial class SummerCampAPIModelsRegistrationsContext
+    [Migration("20250225160210_ChangeFK_Summer_CampsToAllowNulls")]
+    partial class ChangeFK_Summer_CampsToAllowNulls
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace SummerCampAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SummerCampAPI.Models.SC_Payments", b =>
+            modelBuilder.Entity("SummerCampAPI.Models.Summer_Camp_Payments", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace SummerCampAPI.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR(255)");
 
-                    b.Property<int>("FK_SC_Registration")
+                    b.Property<int>("FK_Summer_Camp_Registration")
                         .HasColumnType("int");
 
                     b.Property<string>("Message")
@@ -49,10 +49,10 @@ namespace SummerCampAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SC_Payments");
+                    b.ToTable("Summer_Camp_Payments");
                 });
 
-            modelBuilder.Entity("SummerCampAPI.Models.SC_Registration", b =>
+            modelBuilder.Entity("SummerCampAPI.Models.Summer_Camp_Registration", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -64,24 +64,26 @@ namespace SummerCampAPI.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR(255)");
 
-                    b.Property<int>("FK_Status")
-                        .HasColumnType("int");
+                    b.Property<string>("FK_Status")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(255)");
 
-                    b.Property<int>("FK_Student_Registration__Student_ID")
-                        .HasColumnType("int");
+                    b.Property<string>("FK_Student_Registration__Student_ID")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(255)");
 
                     b.Property<int>("FK_Summer_Camp_Choice")
                         .HasColumnType("int");
 
-                    b.Property<int>("FK_Summer_Camps")
+                    b.Property<int?>("FK_Summer_Camps")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.ToTable("SC_Registration");
+                    b.ToTable("Summer_Camp_Registration");
                 });
 
-            modelBuilder.Entity("SummerCampAPI.Models.SC_Status_History", b =>
+            modelBuilder.Entity("SummerCampAPI.Models.Summer_Camp_Status_History", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -93,15 +95,15 @@ namespace SummerCampAPI.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR(255)");
 
-                    b.Property<int>("FK_SC_Registration")
+                    b.Property<int>("FK_Summer_Camp_Registration")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.ToTable("SC_Status_History");
+                    b.ToTable("Summer_Camp_Status_History");
                 });
 
-            modelBuilder.Entity("SummerCampAPI.Models.SC_Status_Lookup", b =>
+            modelBuilder.Entity("SummerCampAPI.Models.Summer_Camp_Status_Lookup", b =>
                 {
                     b.Property<string>("ID_Code")
                         .HasColumnType("nvarchar(450)");
@@ -112,7 +114,39 @@ namespace SummerCampAPI.Migrations
 
                     b.HasKey("ID_Code");
 
-                    b.ToTable("SC_Status_Lookup");
+                    b.ToTable("Summer_Camp_Status_Lookup");
+
+                    b.HasData(
+                        new
+                        {
+                            ID_Code = "A",
+                            Desc = "(A)pplied by Parent"
+                        },
+                        new
+                        {
+                            ID_Code = "I",
+                            Desc = "(I)nvited - Seat Reserved"
+                        },
+                        new
+                        {
+                            ID_Code = "C",
+                            Desc = "A(C)cepted by Parent"
+                        },
+                        new
+                        {
+                            ID_Code = "R",
+                            Desc = "Invitation (R)ejected by Parent"
+                        },
+                        new
+                        {
+                            ID_Code = "F",
+                            Desc = "Payment (F)ailed by Parent"
+                        },
+                        new
+                        {
+                            ID_Code = "P",
+                            Desc = "(P)aid by Parent"
+                        });
                 });
 #pragma warning restore 612, 618
         }

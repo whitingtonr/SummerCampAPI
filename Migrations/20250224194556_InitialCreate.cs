@@ -2,32 +2,34 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace SummerCampAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class SummerCampAPIModelsRegistrationsContext : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SC_Payments",
+                name: "Summer_Camp_Payments",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_SC_Registration = table.Column<int>(type: "int", nullable: false),
+                    FK_Summer_Camp_Registration = table.Column<int>(type: "int", nullable: false),
                     Event_Type = table.Column<string>(type: "VARCHAR(255)", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(9,2)", precision: 9, scale: 2, nullable: false),
                     Message = table.Column<string>(type: "VARCHAR(255)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SC_Payments", x => x.ID);
+                    table.PrimaryKey("PK_Summer_Camp_Payments", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SC_Registration",
+                name: "Summer_Camp_Registration",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -40,25 +42,25 @@ namespace SummerCampAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SC_Registration", x => x.ID);
+                    table.PrimaryKey("PK_Summer_Camp_Registration", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SC_Status_History",
+                name: "Summer_Camp_Status_History",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_SC_Registration = table.Column<int>(type: "int", nullable: false),
+                    FK_Summer_Camp_Registration = table.Column<int>(type: "int", nullable: false),
                     Action = table.Column<string>(type: "VARCHAR(255)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SC_Status_History", x => x.ID);
+                    table.PrimaryKey("PK_Summer_Camp_Status_History", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SC_Status_Lookup",
+                name: "Summer_Camp_Status_Lookup",
                 columns: table => new
                 {
                     ID_Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -66,7 +68,18 @@ namespace SummerCampAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SC_Status_Lookup", x => x.ID_Code);
+                    table.PrimaryKey("PK_Summer_Camp_Status_Lookup", x => x.ID_Code);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Summer_Camp_Status_Lookup",
+                columns: new[] { "ID_Code", "Desc" },
+                values: new object[,]
+                {
+                    { "A", "Applied by Parent" },
+                    { "C", "aCcepted by Parent" },
+                    { "I", "Invited - Seat Reserved" },
+                    { "P", "Paid by Parent" }
                 });
         }
 
@@ -74,16 +87,16 @@ namespace SummerCampAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SC_Payments");
+                name: "Summer_Camp_Payments");
 
             migrationBuilder.DropTable(
-                name: "SC_Registration");
+                name: "Summer_Camp_Registration");
 
             migrationBuilder.DropTable(
-                name: "SC_Status_History");
+                name: "Summer_Camp_Status_History");
 
             migrationBuilder.DropTable(
-                name: "SC_Status_Lookup");
+                name: "Summer_Camp_Status_Lookup");
         }
     }
 }
