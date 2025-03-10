@@ -21,10 +21,52 @@ namespace SummerCampAPI.Controllers
 			_context = context;
 		}
 
+		[HttpGet("test2")]
+		public async Task<IActionResult> Test2()
+		{
+			string cs = _context.Database.GetDbConnection().ConnectionString;
+			return new JsonResult(cs);
+		}
+
+		[HttpGet("test")]
+		public async Task<IActionResult> Test()
+		{
+			var sql = @"select top 100 * from Summer_Camp_Choice";
+			var result = new List<Dictionary<string, object>>();
+
+			using (var connection = _context.Database.GetDbConnection())
+			{
+				await connection.OpenAsync();
+				using (var command = connection.CreateCommand())
+				{
+					command.CommandText = sql;
+					using (var reader = await command.ExecuteReaderAsync())
+					{
+						while (await reader.ReadAsync())
+						{
+							var row = new Dictionary<string, object>();
+							for (int i = 0; i < reader.FieldCount; i++)
+							{
+								// Don't write null values because it causes error in the json
+								// Probably a better solution but working on a tight deadline.
+								if (!(reader.GetValue(i) is DBNull))
+								{
+									row[reader.GetName(i)] = reader.GetValue(i);
+								}
+							}
+							result.Add(row);
+						}
+					}
+				}
+			}
+
+			return new JsonResult(result);
+		}
+
 		[HttpGet("summercampstatuslookup")]
 		public async Task<IActionResult> GetSummerCampStatuses()
 		{
-			var sql = "Select * from Summer_Camp_Status_Lookup";
+			var sql = "Select * from Summer_Camp_Status_Lookup WHERE ID_Code = 'A' OR ID_Code = 'I'";
 			var result = new List<Dictionary<string, object>>();
 
 			using (var connection = _context.Database.GetDbConnection())
@@ -139,7 +181,7 @@ namespace SummerCampAPI.Controllers
 						FK_Summer_Camp_Registration = existingRegistration.ID,
 						FK_NewStatus = registration.FK_Status,
 						Updated_Date = DateTime.Now,
-						Updated_User = "System" // Replace with actual user if available
+						Updated_User = registration.UpdateUser // Records updateUser in status but not in the registration table
 					};
 					_context.Summer_Camp_Status_History.Add(statusHistory);
 				}
