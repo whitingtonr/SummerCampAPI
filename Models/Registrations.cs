@@ -18,6 +18,8 @@ namespace SummerCampAPI.Models
 		public string School_ID { get; set; }
 		public DateTime UpdateDate { get; set; }
 		public string UpdateUser { get; set; }
+		[Precision(9, 2)]
+		public decimal Price { get; set; }
 	}
 
 	public class Summer_Camp_Status_History

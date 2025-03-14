@@ -23,7 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<RegistrationsContext>(options => options.UseSqlServer(conString, o => o.UseCompatibilityLevel(100)));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddHttpClient();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
